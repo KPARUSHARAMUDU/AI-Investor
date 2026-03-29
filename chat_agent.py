@@ -1,41 +1,54 @@
+import os
+from dotenv import load_dotenv
 from groq import Groq
 
-client = Groq(api_key="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")  
+# 🔐 Load environment variables
+load_dotenv()
 
-def ask_ai(question, context):
+# 🔑 Get API key
+api_key = os.getenv("GROQ_API_KEY")
+
+# ⚠️ Safe client initialization
+client = None
+if api_key:
+    client = Groq(api_key=api_key)
+
+
+def ask_ai(prompt, context=""):
+    """
+    Generate AI response using Groq
+    """
+
+    # ❗ If API key missing
+    if client is None:
+        return "⚠️ API key not found. Please set GROQ_API_KEY in .env"
 
     try:
-        prompt = f"""
-You are a professional stock market analyst AI.
+        full_prompt = f"""
+You are a financial AI assistant.
 
-Analyze the stock based on the given data and answer the user's question clearly.
-
-Stock Data:
+Context:
 {context}
 
 User Question:
-{question}
+{prompt}
 
 Instructions:
-- Explain reasoning using indicators (RSI, MACD, Trend, Volume)
-- Clearly mention BUY / WATCH / AVOID if relevant
-- Keep answer simple but professional
-- Do not give random generic answers
-
-Give structured response:
-1. Summary
-2. Reason
-3. Recommendation
+- Give clear and simple answer
+- If stock related, explain briefly
+- Keep it concise
 """
 
         response = client.chat.completions.create(
             model="llama-3.1-8b-instant",
-            messages=[{"role": "user", "content": prompt}]
+            messages=[
+                {"role": "system", "content": "You are a helpful financial assistant."},
+                {"role": "user", "content": full_prompt}
+            ],
+            temperature=0.7,
         )
-        print("✅ API RESPONSE:", response)
-        
-        return response.choices[0].message.content
+
+        return response.choices[0].message.content.strip()
 
     except Exception as e:
-        print("❌ ERROR:", e)  
-        return f"❌ Error: {str(e)}"
+        return f"⚠️ AI Error: {str(e)}"
