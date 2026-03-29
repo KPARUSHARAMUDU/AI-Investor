@@ -1,10 +1,9 @@
 streamlit
 pandas
+numpy
 SpeechRecognition
 sounddevice
 gTTS
-numpy
+python-dotenv
+groq
 yfinance
-__pycache__/
-*.pyc
-voice_output.mp3
