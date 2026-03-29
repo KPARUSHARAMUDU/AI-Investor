@@ -128,15 +128,8 @@ streamlit run app.py
 
 ## 🎥 Demo
 
-(Add your demo video link here)
+(https://drive.google.com/file/d/18HvQ25stvFkz0u3SDkcMYUeablbMDGV-/view?usp=sharing )
 
----
-
-## 📸 Screenshots
-
-(Add screenshots here)
-
----
 
 ## 🚀 Future Scope
 
