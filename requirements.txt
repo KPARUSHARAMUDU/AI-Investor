@@ -1,0 +1,10 @@
+streamlit
+pandas
+SpeechRecognition
+sounddevice
+gTTS
+numpy
+yfinance
+__pycache__/
+*.pyc
+voice_output.mp3
